@@ -11,7 +11,7 @@
     <div class="grid gap-12 md:grid-cols-12 md:items-stretch md:gap-10">
         <figure class="reveal lift relative overflow-hidden rounded-card shadow-2xl md:col-span-7">
             @php $introAlt = $page['intro']['alt'] ?? $page['title']; @endphp
-            <img src="{{ $img($page['intro']['image']) }}" alt="{{ $introAlt }}" width="1200" height="900" loading="lazy" decoding="async" class="mask-reveal aspect-4/3 w-full object-cover">
+            <img src="{{ $img($page['intro']['image']) }}" alt="{{ $introAlt }}" width="1200" height="900" loading="lazy" decoding="async" class="aspect-4/3 w-full object-cover">
             <figcaption class="absolute inset-x-4 bottom-4 flex flex-col gap-4 rounded-2xl bg-black/70 px-5 py-4 text-white backdrop-blur-md sm:inset-x-6 sm:bottom-6 sm:flex-row sm:items-end sm:justify-between sm:px-6 sm:py-5">
                 <div>
                     <span class="block text-4xl leading-none font-bold sm:text-5xl md:text-6xl">

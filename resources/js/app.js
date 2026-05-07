@@ -50,12 +50,15 @@ const splitWords = () => {
 };
 
 // Single shared IntersectionObserver flips `.is-visible` for any reveal
-// pattern (fade, stagger, mask-reveal, split-words headline).
+// pattern (fade, stagger, mask-reveal, split-words headline). The `.is-js`
+// flag on <html> arms the mask-reveal clip — without it the image stays
+// fully visible, so a JS error or pre-init paint can't leave it clipped.
 const reveal = () => {
     const els = document.querySelectorAll(
         '.reveal, .reveal-stagger, .mask-reveal, [data-split-words]'
     );
     if (!els.length) return;
+    document.documentElement.classList.add('is-js');
     if (!('IntersectionObserver' in window)) {
         els.forEach((el) => el.classList.add('is-visible'));
         return;

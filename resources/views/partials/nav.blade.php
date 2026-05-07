@@ -21,8 +21,8 @@
     class="fixed inset-x-0 top-0 z-50 bg-black border-b border-transparent transition-colors duration-300 in-[.is-scrolled]:border-white/5 in-[.is-scrolled]:bg-black/90 in-[.is-scrolled]:backdrop-blur-md"
 >
     <div class="container-page flex h-16 items-center md:h-20">
-        {{-- Left cluster — equal flex on mobile so middle item centers naturally; auto on desktop --}}
-        <div class="flex flex-1 items-center justify-start lg:flex-none">
+        {{-- Left section (flex-1) — keeps the centre column centred on every breakpoint --}}
+        <div class="flex flex-1 items-center justify-start">
             <button
                 type="button"
                 data-mobile-toggle
@@ -42,13 +42,15 @@
             <x-logo class="hidden h-11 w-auto shrink-0 lg:block" />
         </div>
 
-        {{-- Mobile-only centered logo (centers between two flex-1 siblings) --}}
+        {{-- Mobile-only centred logo (sits between the two flex-1 siblings) --}}
         <a href="{{ route('home') }}" aria-label="VMD home" class="flex shrink-0 items-center lg:hidden">
-            <img src="{{ asset('images/logo.png') }}" alt="VMD Promotion & Events" class="block h-9 w-auto" width="78" height="46">
+            <img src="{{ asset('images/logo.png') }}" alt="VMD Promotion & Events" class="block h-9 w-auto translate-y-0.5" width="78" height="46">
         </a>
 
-        {{-- Desktop nav --}}
-        <nav class="ml-auto hidden items-center gap-8 text-base font-medium text-white lg:flex" aria-label="Primary">
+        {{-- Centre section — desktop nav. Sits between two equal-width flex-1
+             flanks so it stays geometrically centred regardless of the logo
+             or CTA widths. --}}
+        <nav class="hidden items-center gap-8 text-base font-medium text-white lg:flex" aria-label="Primary">
             @foreach ($navLinks as $label => $href)
                 @if ($label === 'Services')
                     <div class="group relative py-1">
@@ -78,8 +80,9 @@
             @endforeach
         </nav>
 
-        {{-- Right cluster: desktop CTA OR mobile enquiry icon --}}
-        <div class="flex flex-1 items-center justify-end lg:flex-none">
+        {{-- Right section (flex-1) — mirrors the left flank's width so the
+             centred nav stays exactly in the middle of the header. --}}
+        <div class="flex flex-1 items-center justify-end">
             {{-- Desktop CTA — opens the enquiry modal --}}
             <x-btn size="sm" data-enquiry-open class="hidden lg:inline-flex cursor-pointer">Enquiry</x-btn>
 

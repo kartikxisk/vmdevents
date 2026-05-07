@@ -307,15 +307,17 @@
 /* ───────────────────────── Image clip-mask reveal ─────────────────────────
    Drop-in alternative to a plain fade — the image wipes open from a side.
    Pair with `data-mask-from="left|right|top|bottom"` (default = left).
+   Gated behind `.is-js` on <html> so the failure mode (no JS, JS error,
+   observer never fires) is "image visible" instead of "image invisible".
 */
 @utility mask-reveal {
-    clip-path: inset(0 100% 0 0);
     transition: clip-path 1s var(--ease-soft);
 }
-.mask-reveal[data-mask-from='right']  { clip-path: inset(0 0 0 100%); }
-.mask-reveal[data-mask-from='top']    { clip-path: inset(100% 0 0 0); }
-.mask-reveal[data-mask-from='bottom'] { clip-path: inset(0 0 100% 0); }
-.mask-reveal.is-visible { clip-path: inset(0); }
+.is-js .mask-reveal                          { clip-path: inset(0 100% 0 0); }
+.is-js .mask-reveal[data-mask-from='right']  { clip-path: inset(0 0 0 100%); }
+.is-js .mask-reveal[data-mask-from='top']    { clip-path: inset(100% 0 0 0); }
+.is-js .mask-reveal[data-mask-from='bottom'] { clip-path: inset(0 0 100% 0); }
+.is-js .mask-reveal.is-visible               { clip-path: inset(0); }
 
 /* ───────────────────────── 3D tilt on hover ─────────────────────────
    JS sets `transform: perspective(...) rotateX(...) rotateY(...)` from

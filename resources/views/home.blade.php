@@ -120,7 +120,7 @@
         <div class="grid gap-12 md:grid-cols-12 md:items-stretch md:gap-10">
             {{-- Image card with stat overlay --}}
             <figure class="reveal lift relative overflow-hidden rounded-card shadow-2xl md:col-span-7">
-                <img src="{{ $img('imgBarmanWithShaker1.png') }}" alt="VMD Events bartenders staffing a brand activation in India" width="1200" height="900" loading="lazy" decoding="async" class="mask-reveal aspect-4/3 w-full object-cover">
+                <img src="{{ $img('imgBarmanWithShaker1.png') }}" alt="VMD Events bartenders staffing a brand activation in India" width="1200" height="900" loading="lazy" decoding="async" class="aspect-4/3 w-full object-cover">
                 <figcaption class="absolute inset-x-4 bottom-4 flex flex-col gap-4 rounded-2xl bg-black/70 px-5 py-4 text-white backdrop-blur-md sm:inset-x-6 sm:bottom-6 sm:flex-row sm:items-end sm:justify-between sm:px-6 sm:py-5">
                     <div>
                         <span class="block text-4xl font-bold leading-none sm:text-5xl md:text-6xl"><span data-counter="15">15</span><span class="text-primary-500">+</span></span>
