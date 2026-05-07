@@ -1,0 +1,376 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+/* Force-include utilities composed dynamically in Blade components. */
+@source inline("btn btn-sm btn-md btn-primary");
+@source inline("section-pad section-pad-lg");
+@source inline("container-page container-content container-prose container-bleed");
+@source inline("bg-surface bg-primary-500 bg-black bg-ink-50 text-ink-500 text-white");
+
+/* ───────────────────────── Design tokens ─────────────────────────
+   These generate Tailwind utilities automatically:
+     --color-* → bg-*, text-*, border-* …
+     --container-* → max-w-*
+     --radius-* → rounded-*
+     --shadow-* → shadow-*
+     --font-* → font-*
+*/
+@theme {
+    --font-sans: 'Figtree', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --color-surface: #f3f0f0;
+
+    --color-primary-500: #ffa027;
+    --color-primary-600: #f08e10;
+
+    --color-ink-50: #fafafa;
+    --color-ink-100: #b2b2b2;
+    --color-ink-200: #8d8d8d;
+    --color-ink-300: #5a5a5a;
+    --color-ink-400: #393939;
+    --color-ink-500: #080808;
+
+    --container-page: 1440px;
+    --container-content: 1200px;
+    --container-prose: 768px;
+
+    --gutter-page: 1.5rem;     /* mobile */
+    --gutter-page-md: 5rem;    /* md+ */
+
+    --radius-card: 1.875rem; /* 30px */
+    --radius-cta: 2.5rem;    /* 40px */
+
+    --shadow-soft: 0 10px 30px -10px rgb(0 0 0 / 0.15);
+    --shadow-lift: 0 24px 50px -20px rgb(0 0 0 / 0.25);
+    --shadow-glow-primary: 0 20px 40px -10px rgb(255 160 39 / 0.6);
+
+    --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ───────────────────────── Base ───────────────────────── */
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+    body {
+        background-color: var(--color-surface);
+        color: var(--color-ink-500);
+        font-family: var(--font-sans);
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+    }
+}
+
+/* ───────────────────────── Layout utilities ─────────────────────────
+   Three width tiers, all share the same horizontal gutter so vertical
+   alignment between sections is always consistent.
+*/
+@utility container-page {
+    margin-inline: auto;
+    width: 100%;
+    max-width: var(--container-page);
+    padding-inline: var(--gutter-page);
+
+    @variant md {
+        padding-inline: var(--gutter-page-md);
+    }
+}
+
+@utility container-content {
+    margin-inline: auto;
+    width: 100%;
+    max-width: var(--container-content);
+    padding-inline: var(--gutter-page);
+
+    @variant md {
+        padding-inline: var(--gutter-page-md);
+    }
+}
+
+@utility container-prose {
+    margin-inline: auto;
+    width: 100%;
+    max-width: var(--container-prose);
+    padding-inline: var(--gutter-page);
+
+    @variant md {
+        padding-inline: var(--gutter-page-md);
+    }
+}
+
+/* Full-bleed strip (e.g. marquees) that ignores the container gutter. */
+@utility container-bleed {
+    margin-inline: calc(-1 * var(--gutter-page));
+
+    @variant md {
+        margin-inline: calc(-1 * var(--gutter-page-md));
+    }
+}
+
+@utility section-pad {
+    padding-block: --spacing(24);
+}
+
+@utility section-pad-lg {
+    padding-block: --spacing(28);
+
+    @variant md {
+        padding-block: --spacing(32);
+    }
+}
+
+/* ───────────────────────── Headings ───────────────────────── */
+@utility heading-xl {
+    @apply text-5xl font-semibold leading-[1.05] tracking-tight md:text-7xl;
+}
+@utility heading-lg {
+    @apply text-5xl font-semibold tracking-tight md:text-6xl;
+}
+@utility heading-md {
+    @apply text-4xl font-semibold leading-tight tracking-tight md:text-5xl;
+}
+@utility eyebrow {
+    @apply text-xs uppercase tracking-[0.3em];
+}
+
+/* ───────────────────────── Buttons ───────────────────────── */
+@utility btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-300 active:scale-95;
+}
+@utility btn-md {
+    @apply px-8 py-4 text-base;
+}
+@utility btn-sm {
+    @apply px-4 py-2 text-sm;
+}
+@utility btn-primary {
+    @apply bg-primary-500 text-ink-500;
+}
+.btn-primary:hover {
+    background-color: var(--color-primary-600);
+    box-shadow: var(--shadow-glow-primary);
+}
+
+/* ───────────────────────── Cards & surfaces ───────────────────────── */
+@utility surface-card {
+    @apply overflow-hidden rounded-card bg-white shadow-soft;
+}
+
+@utility lift {
+    transition: transform 0.5s var(--ease-soft), box-shadow 0.5s ease;
+    will-change: transform;
+}
+.lift:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lift);
+}
+
+/* ───────────────────────── Reveal-on-scroll ───────────────────────── */
+@utility reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.9s var(--ease-soft), transform 0.9s var(--ease-soft);
+    will-change: opacity, transform;
+}
+.reveal.is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+.reveal-stagger > * {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s var(--ease-soft), transform 0.7s var(--ease-soft);
+}
+.reveal-stagger.is-visible > * {
+    opacity: 1;
+    transform: none;
+}
+.reveal-stagger.is-visible > *:nth-child(1) { transition-delay: 0.05s; }
+.reveal-stagger.is-visible > *:nth-child(2) { transition-delay: 0.15s; }
+.reveal-stagger.is-visible > *:nth-child(3) { transition-delay: 0.25s; }
+.reveal-stagger.is-visible > *:nth-child(4) { transition-delay: 0.35s; }
+.reveal-stagger.is-visible > *:nth-child(5) { transition-delay: 0.45s; }
+
+/* ───────────────────────── Hero entrance ───────────────────────── */
+@keyframes hero-fade {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: none; }
+}
+@utility hero-fade {
+    animation: hero-fade 1s var(--ease-soft) both;
+}
+
+/* ───────────────────────── Marquee ───────────────────────── */
+@keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+@utility marquee {
+    display: flex;
+    width: max-content;
+    animation: marquee var(--marquee-duration, 40s) linear infinite;
+}
+.marquee-pause:hover .marquee {
+    animation-play-state: paused;
+}
+
+/* ───────────────────────── Floating glow ───────────────────────── */
+@keyframes float-blob {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    50%      { transform: translate(-50%, -50%) scale(1.04); }
+}
+@utility float-blob {
+    animation: float-blob 6s ease-in-out infinite;
+}
+
+/* Ambient warm-orange glow that bleeds in from the top-left on every page.
+   Positioned outside the viewport so only the soft edge is visible. */
+@utility page-glow {
+    position: absolute;
+    top: -10rem;
+    left: -12rem;
+    z-index: 0;
+    width: 30rem;
+    height: 30rem;
+    border-radius: 9999px;
+    background: radial-gradient(closest-side, rgb(255 160 39 / 0.3), transparent 70%);
+    filter: blur(40px);
+    pointer-events: none;
+}
+@media (min-width: 768px) {
+    .page-glow {
+        top: -20rem;
+        left: -20rem;
+        width: 60rem;
+        height: 60rem;
+        background: radial-gradient(closest-side, rgb(255 160 39 / 0.35), transparent 70%);
+        filter: blur(60px);
+    }
+}
+
+/* ───────────────────────── FAQ accordion ───────────────────────── */
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::marker { content: ''; }
+
+@utility faq-icon {
+    transition: transform 0.4s var(--ease-soft);
+}
+.faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+}
+
+@utility faq-body {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.45s var(--ease-soft), opacity 0.3s ease;
+}
+.faq-item[open] .faq-body {
+    max-height: 320px;
+    opacity: 1;
+}
+
+/* ───────────────────────── Hero parallax ───────────────────────── */
+@utility hero-img {
+    transform: scale(1.08) translateY(var(--parallax, 0px));
+    transition: transform 0.1s linear;
+}
+
+/* ───────────────────────── Word-by-word headline reveal ─────────────────────────
+   Used with `data-split-words` on a heading. JS wraps each word in
+   `<span class="word"><span class="word-inner">…</span></span>`, then a
+   shared IntersectionObserver toggles `.is-visible`, which clears the
+   100% downward translate inside an overflow-hidden mask.
+*/
+[data-split-words] .word {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    line-height: 1.05;
+    padding-bottom: 0.05em;
+}
+[data-split-words] .word-inner {
+    display: inline-block;
+    transform: translateY(110%);
+    transition: transform 0.85s var(--ease-soft);
+}
+[data-split-words].is-visible .word-inner {
+    transform: translateY(0);
+}
+
+/* ───────────────────────── Image clip-mask reveal ─────────────────────────
+   Drop-in alternative to a plain fade — the image wipes open from a side.
+   Pair with `data-mask-from="left|right|top|bottom"` (default = left).
+*/
+@utility mask-reveal {
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1s var(--ease-soft);
+}
+.mask-reveal[data-mask-from='right']  { clip-path: inset(0 0 0 100%); }
+.mask-reveal[data-mask-from='top']    { clip-path: inset(100% 0 0 0); }
+.mask-reveal[data-mask-from='bottom'] { clip-path: inset(0 0 100% 0); }
+.mask-reveal.is-visible { clip-path: inset(0); }
+
+/* ───────────────────────── 3D tilt on hover ─────────────────────────
+   JS sets `transform: perspective(...) rotateX(...) rotateY(...)` from
+   cursor offset; the CSS just defines the easing baseline.
+*/
+@utility tilt {
+    transform: perspective(1200px);
+    transition: transform 0.5s var(--ease-soft), box-shadow 0.5s ease;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+.tilt:hover { box-shadow: var(--shadow-lift); }
+
+/* ───────────────────────── Scroll progress bar ─────────────────────────
+   Thin warm gradient line at the top of the viewport. JS writes the
+   `--progress` value (0–1); CSS scales the inner bar accordingly.
+*/
+@utility scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 60;
+    height: 2px;
+    width: 100%;
+    pointer-events: none;
+}
+.scroll-progress::before {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, var(--color-primary-500), var(--color-primary-600));
+    transform-origin: 0 50%;
+    transform: scaleX(var(--progress, 0));
+    transition: transform 0.1s linear;
+}
+
+/* ───────────────────────── Reduced motion ───────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+    .reveal,
+    .reveal-stagger > * {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+    [data-split-words] .word-inner {
+        transform: none !important;
+    }
+    .mask-reveal {
+        clip-path: none !important;
+    }
+    .scroll-progress { display: none; }
+}
