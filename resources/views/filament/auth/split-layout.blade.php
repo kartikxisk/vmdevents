@@ -94,7 +94,6 @@
         .vmd-auth-aside__brand img {
             height: 3.25rem;
             width: auto;
-            filter: brightness(0) invert(1);
         }
 
         .vmd-auth-aside__copy { max-width: 30rem; }
